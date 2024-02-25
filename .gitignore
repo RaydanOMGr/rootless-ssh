@@ -1,3 +1,10 @@
 node_modules
 node_modules/
 /node_modules
+test
+test/
+/test
+.idea
+.idea/
+/.idea
+*.iml

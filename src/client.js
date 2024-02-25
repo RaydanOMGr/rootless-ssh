@@ -12,16 +12,25 @@ class Client {
 
     connect() {
         const wss = this.wscl
+
         wss.on('open', () => {
             console.log(`Connected to ${this.url}`)
             const readline = require('node:readline').createInterface({
                 input: process.stdin,
                 output: process.stdout,
             })
+            let lastMessage;
             wss.on('message', (data) => {
                 const dt = JSON.parse(data.toString())
-                console.log(!dt?.output ? '\n' : dt?.output)
+                if(!dt.output) return;
+                process.stdout.clearLine();
+                process.stdout.write(dt.output)
+                let thisMessage = new Date().getDate();
+                lastMessage = thisMessage;
                 readline.question(`${dt.user}@${dt.path}$ `, (cmd) => {
+                    if(lastMessage !== thisMessage) return;
+                    process.stdout.clearLine();
+                    process.stdout.write(`${dt.user}@${dt.path}$ `)
                     wss.send(cmd)
                 })
             })

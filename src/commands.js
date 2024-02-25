@@ -1,6 +1,6 @@
 /**
  * This file contains all custom commands needed to work around ssh like changing directory.
- * 
+ *
  * Right now, the only function this contains is the change directory command. More will be added later on.
  */
 function formatPath(currentPath) {
